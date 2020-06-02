@@ -1,4 +1,9 @@
-emulate bash
+# This script is made up of a load of old bash
+# functions and aliases, as things are tested
+# and fixed, they'll be moved to new homes.
+
+#  You have been warned:
+#    Here be dragons.
 
 # below is my prompt-y bit of choice: `current-dir ~ `
 #export PS1="\[\e[33m\]\W \[\e[35m\]~ \[\e[m\]"
