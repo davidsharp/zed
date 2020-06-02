@@ -18,27 +18,6 @@ alias reload="source ~/.bash_profile"
 # open this to edit (if it's your .bash_profile)
 alias editbash="code ~/.bash_profile"
 
-# hiving things off to their own files
-for file in ~/.dash_utils/*
-do
-  source $file
-done
-function readutils(){
-  # this wouldn't work with scripts with spaces, by the way
-  dash_scripts=($(ls ~/.dash_utils))
-  cat ${dash_scripts[@]} | less
-}
-
-# open applications saved in the Applications folder
-function __∆(){
-  app=$1; shift;
-  if [ -d "/Applications/$app.app" ]; then
-    open -a "$app.app" $@
-  else
-    echo "Couldn't find \"$app.app\" in \"/Applications\", is it definitely installed there?"
-  fi
-}
-
 # a semi-functional alternative to the code cli program (args don't work)
 function code(){
   open -a Visual\ Studio\ Code.app $@
