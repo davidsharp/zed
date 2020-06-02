@@ -2,9 +2,10 @@
 
 # open applications saved in the Applications folder
 function ∆(){
-  if [ -d "/Applications/$1.app" ]; then
-    open "/Applications/$1.app"
+  app=$1; shift;
+  if [ -d "/Applications/$app.app" ]; then
+    open -a "$app.app" $@
   else
-    echo "Couldn't find \"$1.app\" in \"/Applications\", is it definitely installed there?"
+    echo "Couldn't find \"$app.app\" in \"/Applications\", is it definitely installed there?"
   fi
 }
