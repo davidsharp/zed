@@ -4,6 +4,8 @@
 function code(){
   open -a Visual\ Studio\ Code.app $@
 }
+function codenew(){ touch "$1"; code "$1"; }
+alias create="codenew"
 
 # open fork (git gui)
 function fork(){
