@@ -23,16 +23,6 @@ alias reload="source ~/.bash_profile"
 # open this to edit (if it's your .bash_profile)
 alias editbash="code ~/.bash_profile"
 
-# a semi-functional alternative to the code cli program (args don't work)
-function code(){
-  open -a Visual\ Studio\ Code.app $@
-}
-
-# open fork (git gui)
-function fork(){
-  open -a fork $@
-}
-
 # cd to a directory and ls immediately
 function cdls(){ builtin cd "$@"; ls -FGAhno; }
 
