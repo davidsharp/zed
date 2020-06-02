@@ -425,15 +425,3 @@ function whichsym(){
 
 # quick tweet link
 alias tweet="open https://twitter.com/intent/tweet"
-
-# run these when the terminal starts (+ make them yellow)
-echo -n "$(tput setaf 3)"
-kyouwa
-daysuntil
-scheduledevents
-payday 24
-nowplaying
-location="Brighton and Hove"
-esc_location=${location// /%20}
-wttr $esc_location format='%c++%t+|+%w'
-echo -n "$(tput sgr 0)"
