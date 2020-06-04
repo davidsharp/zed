@@ -23,9 +23,6 @@ alias reload="source ~/.bash_profile"
 # open this to edit (if it's your .bash_profile)
 alias editbash="code ~/.bash_profile"
 
-# cd to a directory and ls immediately
-function cdls(){ builtin cd "$@"; ls -FGAhno; }
-
 # grab current weather takes an argument for the place
 # `$ wttr brighton` or `$ wttr moon` or `$ wttr yyz` or even `$ wttr :help`
 # if you know wttr flags, you can specify in a second param
@@ -268,82 +265,6 @@ function h(){
    l                 - Lists all available bookmarks"
 }
 
-# ratty set of functions for setting a countdown to a date
-#  use like: `$ setdaysuntil "My Big Holiday" 29/03/2018`
-#   to see how many days: `$ daysuntil` to remove the countdown: `$ rmdaysuntil`
-DAYSUNTILFILE=~/.daysuntildate
-function daysuntil(){
-  if [ -f $DAYSUNTILFILE ]; then
-    c=0
-    strings=()
-    while read -r line
-    do
-      strings[$c]=$line
-      let c=c+1
-    done < $DAYSUNTILFILE
-    while [  $c -gt 0 ]; do
-      event=${strings[$(expr $c - 2)]}
-      date=${strings[$(expr $c - 1)]}
-      today=$(echo "$(date +%d/%m/%Y:00:00)")
-      let days=$(echo $(((`date -jf %d/%m/%Y:%M:%S "$date:00:00" +%s` - `date -jf %d/%m/%Y:%M:%S $today +%s`)/86400)))
-      echo "$days days until $event on $date"
-      let c=c-2 
-    done
-  else
-    echo "Not currently counting down for anything (hint: \`\$ setdaysuntil \"My Big Holiday\" 29/03/2018\`)"
-  fi
-}
-function setdaysuntil(){
-  echo -e "$1\n$2" > $DAYSUNTILFILE
-  daysuntil
-}
-function rmdaysuntil(){
-  rm $DAYSUNTILFILE
-}
-function adddaysuntil(){
-  echo -e "$1\n$2" >> $DAYSUNTILFILE
-  daysuntil
-}
-
-# Even rattier than days until, used for regular events,
-#   requires specified dates for each instance
-# No helper functions for now, maybe later?
-SCHEDULEDEVENTSFILE=~/.scheduledevents
-function scheduledevents(){
-  if [ -f $SCHEDULEDEVENTSFILE ]; then
-    c=0
-    strings=()
-    while read -r line
-    do
-      strings[$c]=$line
-      let c=c+1
-    done < $SCHEDULEDEVENTSFILE
-    while [  $c -gt 0 ]; do
-      read -a temp <<< $(echo ${strings[$(expr $c - 1)]} | tr ":" "\n")
-      event=${temp[0]}
-      dates=$(echo ${temp[1]} | tr ";" "\n")
-      for date in $dates
-      do
-        if [ "$date" = "$(date +%d/%m/%Y)" ]; then
-          echo "$event is today"
-        fi
-      done
-
-      let c=c-1
-    done
-  else
-    echo "Not currently got a schedule (hint: layout is \`event\ example:DD/MM/YYYY;DD/MM/YYYY;DD/MM/YYYY\`)"
-  fi
-}
-
-function payday(){
-  DAY=$(date +%u)
-  D_O_MONTH=$(date +%-d)
-  if (($1 == $D_O_MONTH)) || (($DAY == 5 && (((($1 == $(date -j -v+1d +%-d))) || (($1 == $(date -j -v+2d +%-d))))))); then 
-   echo "Today is payday!"
-  fi
-}
-
 # depends on t, pipes your timeline into less, so it doesn't fill your terminal
 function timeline(){
   t timeline -e=replies -n=80 $@ | less -r
@@ -351,26 +272,6 @@ function timeline(){
 function streamline(){
   # todo, something smarter
   t stream timeline -d
-}
-
-# init a project with defaults and open it in VSCode
-# use like `$ init my-new-project`
-function init(){
-  mkdir $1 && cd $1 && git init && yarn init -y && touch .gitignore && echo "node_modules" > .gitignore && code .
-}
-# set your git user details for your current project
-#  (in case your global needs to be different, for work, etc)
-function gitconfig(){
-  if [[ $1 ]];then
-    git config --local --unset-all user.name
-    git config --local --add user.name "$1"
-    git config --local --unset-all user.email
-    git config --local --add user.email "$2"
-  else
-    echo "[usage: $ gitconfig myepicusername my.epic@user.name]"
-    echo "Current local git config :"
-    git config -l --local
-  fi  
 }
 
 # pumps your clipboard contents into node
@@ -391,30 +292,6 @@ function nodeeval(){
   else
     echo "evaluating from clipboard:"
     nodepaste
-  fi  
-}
-
-# kills a program that's pointing at the specified port
-# `$ portkill 8080`
-function portkill(){
-  if [ $1 ];then
-    echo "killing program using port $1"
-    kill $(lsof -t -i :$1)
-  else
-    echo "portkill needs a port to kill! portkill hungry!"
-  fi  
-}
-
-# like `which`, but follows a symlink
-# `$ whichsym npm`
-function whichsym(){
-  if [ $1 ];then
-    symlink=$(which $1)
-    followedlink=$(readlink $symlink)
-    mungedpath=$(cd $(dirname $symlink);cd $(dirname $followedlink);echo "$(pwd)/$(basename $followedlink)")
-    echo $mungedpath
-  else
-    echo "whichsym needs a symlink to which! whichsym hungry!"
   fi  
 }
 
