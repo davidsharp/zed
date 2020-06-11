@@ -16,6 +16,9 @@ wttr $esc_location format='%c++%t+|+%w'
 echo -n "$(tput sgr 0)"
 ```
 
+## Highlights
+- `gitconfig <name> <email>`: sets a name and email in the gitconfig to the current git directory, useful for using git for personal and work use on the same machine
+
 ## re: `wildwest.sh`
 ```
 # This script is made up of a load of old bash
