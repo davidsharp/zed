@@ -1,5 +1,10 @@
 # zed – zsh scripts
-to use, stick `source ~/Code/zed/main.sh` in your `.zshrc` or `.zprofile`
+> opinionated zsh scripts, written for myself, but free to the world
+
+## to use
+to use, stick `source ~/path/to/zed/main.sh` in your `.zshrc` or `.zprofile`
+
+or source specific scripts directly from `~/path/to/zed/scripts`
 
 to run functions in new terminal sessions, place something like this in your `.zlogin`:
 ```
@@ -16,7 +21,7 @@ wttr $esc_location format='%c++%t+|+%w'
 echo -n "$(tput sgr 0)"
 ```
 
-## Highlights
+## highlights
 - `gitconfig <name> <email>`: sets a name and email in the gitconfig to the current git directory, useful for using git for personal and work use on the same machine
 
 ## re: `wildwest.sh`
