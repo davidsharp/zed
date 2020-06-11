@@ -12,6 +12,7 @@ function readutils(){
   cat ${dash_scripts[@]} | less
 }
 
+## Put something like this in your .zshrc / .zprofile / .zlogin
 # run these when the terminal starts (+ make them yellow)
 #echo -n "$(tput setaf 3)"
 #kyouwa
@@ -22,4 +23,4 @@ function readutils(){
 #location="Brighton and Hove"
 #esc_location=${location// /%20}
 #wttr $esc_location format='%c++%t+|+%w'
-echo -n "$(tput sgr 0)"
+#echo -n "$(tput sgr 0)"
