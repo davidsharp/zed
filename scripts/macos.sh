@@ -1,5 +1,8 @@
 # Assorted macOS specific functions
 
+alias enableChime='nvram StartupMute=%00'
+alias disableChime='nvram StartupMute=%01'
+
 # toggle hidden files, source: https://ianlunn.co.uk/articles/quickly-showhide-hidden-files-mac-os-x-mavericks/
 # showHiddens and hideHiddens implicitly kill Finder
 alias showHiddens='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
